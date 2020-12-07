@@ -125,6 +125,15 @@ sechsA = [s, g, g, s, s, g, g, s,
          s, g, g, s, s, g, g, s,
          s, g, g, s, s, g, g, s]
 
+draw = [w, g, w, g, w, g, w, g,
+        w, g, w, g, w, g, w, g,
+        w, g, w, g, w, g, w, g,
+        w, g, w, g, w, g, w, g,
+        w, g, w, g, w, g, w, g,
+        w, g, w, g, w, g, w, g,
+        w, g, w, g, w, g, w, g,
+        w, g, w, g, w, g, w, g,]
+
 one = [eins, zwei, drei, vier, fuenf, sechs]
 two = [einsA, zweiA, dreiA, vierA, fuenfA, sechsA]
 
@@ -141,16 +150,23 @@ def wuerfel(player):
     return zahlen
 
 def winner(scoreone, scoretwo):
-    #if scoreone < scoretwo:
-        #spieler zwei gewinnt
-    #elif scoreone > scoretwo:
-        #sense.show_message("win white", text_colour=w, scroll_speed=0.05)
-    #else:
-        #unentschieden
-    return "Spieler 1"
+    if scoreone > scoretwo:
+        sense.show_message("Winner", text_colour=w, scroll_speed=0.1)
+        sense.clear(w)
+        sleep(3)
+        sense.clear()
+    elif scoreone < scoretwo:
+        sense.show_message("Winner", text_colour=g, scroll_speed=0.1)
+        sense.clear(g)
+        sleep(3)
+        sense.clear()
+    else:
+        sense.show_message("Draw", text_colour=b, scroll_speed=0.1)
+        sense.set_pixels(draw)
+        sleep(3)
+        sense.clear()
 
 while True:
-    #TODO: state machine
     if state == 1:
         player = one
         orientation = sense.get_orientation_degrees()
@@ -175,8 +191,11 @@ while True:
 
     elif state == 3:
         player = one
-        won = winner(scoreone, scoretwo)
-        print(won)
+        winner(scoreone, scoretwo)
+        sleep(5)
+        scoreone = -1
+        scoretwo = -1
+        state = 1
 
     else:
         print("ungültiger Status")
