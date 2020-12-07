@@ -3,7 +3,7 @@
 
 from sense_hat import SenseHat
 from time import sleep
-from random import choice
+import random
 
 sense = SenseHat()
 sense.set_imu_config(False, True, False)  # gyroscope only
@@ -134,13 +134,11 @@ scoreone = 0
 scoretwo = 2
 
 def wuerfel(player):
-    #TODO: set random with number
-    # random.randint(0,5)
-    zahlen = choice(player)
-    sense.set_pixels(zahlen)
+    zahlen = random.randint(0, 5)
+    sense.set_pixels(player[zahlen])
     sleep(6)
     sense.clear()
-    return 5
+    return zahlen
 
 #def winner(scoreone, scoretwo):
     #if scoreone < scoretwo:
