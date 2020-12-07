@@ -130,8 +130,8 @@ two = [einsA, zweiA, dreiA, vierA, fuenfA, sechsA]
 
 state = 1
 player = one
-scoreone = 0
-scoretwo = 2
+scoreone = -1
+scoretwo = -1
 
 def wuerfel(player):
     zahlen = random.randint(0, 5)
@@ -140,17 +140,19 @@ def wuerfel(player):
     sense.clear()
     return zahlen
 
-#def winner(scoreone, scoretwo):
+def winner(scoreone, scoretwo):
     #if scoreone < scoretwo:
         #spieler zwei gewinnt
     #elif scoreone > scoretwo:
         #sense.show_message("win white", text_colour=w, scroll_speed=0.05)
     #else:
         #unentschieden
+    return "Spieler 1"
 
 while True:
     #TODO: state machine
     if state == 1:
+        player = one
         orientation = sense.get_orientation_degrees()
         pitch = orientation.get("pitch")
 
@@ -158,6 +160,23 @@ while True:
             sense.clear(w)
         else:
             scoreone = wuerfel(player)
-            print(scoreone)
+            state += 1
+
+    elif state == 2:
+        player = two
+        orientation = sense.get_orientation_degrees()
+        pitch = orientation.get("pitch")
+
+        if 0 <= pitch <= 40 or 320 <= pitch <= 360:
+            sense.clear(g)
+        else:
+            scoretwo = wuerfel(player)
+            state += 1
+
+    elif state == 3:
+        player = one
+        won = winner(scoreone, scoretwo)
+        print(won)
+
     else:
-        print(nope)
+        print("ungültiger Status")
