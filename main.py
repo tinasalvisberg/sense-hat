@@ -150,13 +150,14 @@ def wuerfel(player):
 
 while True:
     #TODO: state machine
-    orientation = sense.get_orientation_degrees()
-    pitch = orientation.get("pitch")
-    #print(pitch)
+    if state == 1:
+        orientation = sense.get_orientation_degrees()
+        pitch = orientation.get("pitch")
 
-    if 0 <= pitch <= 40 or 320 <= pitch <= 360:
-        print("nichts tun")
-        #TODO: display color of player
+        if 0 <= pitch <= 40 or 320 <= pitch <= 360:
+            sense.clear(w)
+        else:
+            scoreone = wuerfel(player)
+            print(scoreone)
     else:
-        scoreone = wuerfel(player)
-        print(scoreone)
+        print(nope)
